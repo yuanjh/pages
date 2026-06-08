@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>邮储银行 · 工程脚手架（V3.0）</title>
+<style>
+/* ========== Reset & Base ========== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --green-950: oklch(0.22 0.06 160);
+  --green-900: oklch(0.28 0.08 160);
+  --green-800: oklch(0.35 0.09 158);
+  --green-700: oklch(0.42 0.10 156);
+  --green-600: oklch(0.48 0.12 155);
+  --green-500: oklch(0.54 0.13 153);
+  --green-400: oklch(0.62 0.12 150);
+  --green-300: oklch(0.72 0.10 148);
+  --green-200: oklch(0.82 0.06 145);
+  --green-100: oklch(0.90 0.03 145);
+  --green-50: oklch(0.96 0.015 145);
+  --neutral-950: oklch(0.18 0.008 155);
+  --neutral-900: oklch(0.24 0.008 155);
+  --neutral-800: oklch(0.32 0.008 155);
+  --neutral-700: oklch(0.40 0.008 155);
+  --neutral-600: oklch(0.48 0.008 155);
+  --neutral-500: oklch(0.56 0.008 155);
+  --neutral-400: oklch(0.67 0.008 155);
+  --neutral-300: oklch(0.78 0.006 155);
+  --neutral-200: oklch(0.87 0.005 155);
+  --neutral-100: oklch(0.93 0.003 155);
+  --neutral-50: oklch(0.97 0.002 155);
+  --white: oklch(0.99 0.001 155);
+  --amber-500: oklch(0.78 0.17 82);
+  --amber-100: oklch(0.94 0.06 82);
+  --red-600: oklch(0.52 0.18 25);
+  --red-100: oklch(0.94 0.04 25);
+  --blue-700: oklch(0.46 0.18 260);
+  --blue-100: oklch(0.92 0.04 260);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --shadow-sm: 0 1px 3px oklch(0 0 0 / 0.06);
+  --shadow-md: 0 2px 8px oklch(0 0 0 / 0.08), 0 1px 2px oklch(0 0 0 / 0.04);
+  --shadow-lg: 0 4px 16px oklch(0 0 0 / 0.10), 0 2px 4px oklch(0 0 0 / 0.04);
+  --transition: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: var(--neutral-100);
+  color: var(--neutral-900);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ========== Header ========== */
+.header {
+  background: linear-gradient(135deg, var(--green-900) 0%, var(--green-800) 40%, var(--green-700) 100%);
+  color: var(--white);
+  padding: 18px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 16px oklch(0 0 0 / 0.18);
+}
+.header-inner {
+  max-width: 1340px;
+  margin: 0 auto;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.header-logo {
+  width: 44px; height: 44px;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; font-weight: 700; color: var(--green-800);
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px oklch(0 0 0 / 0.12);
+}
+.header h1 { font-size: 20px; font-weight: 600; letter-spacing: 0.02em; }
+.header .subtitle { font-size: 12.5px; opacity: 0.82; margin-top: 1px; }
+.header-badge {
+  margin-left: auto;
+  font-size: 12px;
+  background: oklch(1 0 0 / 0.15);
+  backdrop-filter: blur(6px);
+  padding: 5px 14px; border-radius: 20px;
+  border: 1px solid oklch(1 0 0 / 0.2);
+}
+
+/* ========== Layout ========== */
+.container {
+  max-width: 1340px; margin: 0 auto; padding: 24px 28px;
+  display: grid;
+  grid-template-columns: 520px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* ========== Section Panels ========== */
+.section {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 16px;
+  overflow: hidden;
+  border: 1px solid var(--neutral-200);
+  transition: box-shadow var(--transition);
+}
+.section:hover { box-shadow: var(--shadow-md); }
+.section-header {
+  padding: 14px 20px;
+  background: var(--neutral-50);
+  border-bottom: 1px solid var(--neutral-200);
+  display: flex; align-items: center; gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 14px; font-weight: 600;
+  color: var(--neutral-800);
+  transition: background var(--transition);
+}
+.section-header:hover { background: var(--green-50); }
+.section-header .step-num {
+  width: 26px; height: 26px;
+  background: var(--green-600); color: var(--white);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700;
+  flex-shrink: 0;
+}
+.section-header .arrow {
+  margin-left: auto;
+  font-size: 11px;
+  transition: transform var(--transition);
+  color: var(--neutral-500);
+}
+.section-header.open .arrow { transform: rotate(180deg); }
+.section-body { padding: 18px 20px; display: none; }
+.section-body.show { display: block; }
+
+/* ========== Form Elements ========== */
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.form-group { margin-bottom: 12px; }
+.form-group:last-child { margin-bottom: 0; }
+.form-group label {
+  display: block;
+  font-size: 12.5px; font-weight: 600;
+  color: var(--neutral-700);
+  margin-bottom: 4px;
+}
+.form-group label .required-star { color: var(--red-600); margin-left: 2px; }
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--neutral-300);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--neutral-900);
+  background: var(--white);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  outline: none;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--green-500);
+  box-shadow: 0 0 0 3px oklch(0.54 0.13 153 / 0.12);
+}
+.form-group input::placeholder { color: var(--neutral-400); }
+.form-group textarea { resize: vertical; min-height: 60px; font-size: 12px; }
+
+/* ========== Environment Tags ========== */
+.env-tags {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.env-tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 6px 14px;
+  border: 1.5px solid var(--neutral-300);
+  border-radius: 20px;
+  font-size: 12.5px; font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+  background: var(--white);
+  color: var(--neutral-700);
+  user-select: none;
+}
+.env-tag:hover { border-color: var(--green-400); background: var(--green-50); }
+.env-tag.selected {
+  background: var(--green-600);
+  color: var(--white);
+  border-color: var(--green-600);
+  font-weight: 600;
+  box-shadow: 0 2px 6px oklch(0.48 0.12 155 / 0.3);
+}
+.env-tag .env-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.5;
+}
+.env-tag.selected .env-dot { opacity: 1; background: var(--white); }
+
+/* ========== Env Config Panel ========== */
+.env-config-panel {
+  margin-top: 14px;
+  background: var(--neutral-50);
+  border: 1px solid var(--neutral-200);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.env-config-tabs {
+  display: flex; overflow-x: auto;
+  background: var(--neutral-100);
+  border-bottom: 1px solid var(--neutral-200);
+}
+.env-config-tab {
+  padding: 8px 16px;
+  font-size: 12px; font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  color: var(--neutral-600);
+  transition: all var(--transition);
+  background: none; border-top: none; border-left: none; border-right: none;
+}
+.env-config-tab:hover { color: var(--green-700); }
+.env-config-tab.active {
+  color: var(--green-700); font-weight: 600;
+  border-bottom-color: var(--green-600);
+  background: var(--white);
+}
+.env-config-body { padding: 14px 16px; }
+.env-config-body .env-pane { display: none; }
+.env-config-body .env-pane.active { display: block; }
+
+/* ========== Component Item ========== */
+.comp-category { margin-bottom: 12px; }
+.comp-category:last-child { margin-bottom: 0; }
+.comp-cat-header {
+  padding: 10px 14px;
+  background: var(--neutral-50);
+  border: 1px solid var(--neutral-200);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 13px; font-weight: 600;
+  color: var(--neutral-800);
+  user-select: none;
+  transition: background var(--transition);
+}
+.comp-cat-header:hover { background: var(--green-50); }
+.comp-cat-header .cat-icon { margin-right: 6px; font-size: 16px; }
+.comp-cat-body { display: none; padding: 6px 0 0 0; }
+.comp-cat-body.show { display: block; }
+.comp-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  transition: background var(--transition);
+  border-radius: var(--radius-md);
+}
+.comp-item:hover { background: var(--green-50); }
+.comp-item input[type="checkbox"] {
+  accent-color: var(--green-600);
+  width: 16px; height: 16px; flex-shrink: 0;
+}
+.comp-name { flex: 1; font-weight: 500; color: var(--neutral-800); }
+.comp-ver {
+  font-size: 11px; color: var(--neutral-500);
+  background: var(--neutral-100);
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+}
+.comp-tag {
+  font-size: 10.5px; font-weight: 600;
+  padding: 2px 7px; border-radius: var(--radius-sm);
+}
+.comp-tag.required { background: var(--amber-100); color: oklch(0.55 0.12 80); }
+.comp-tag.recommended { background: var(--green-50); color: var(--green-700); }
+
+/* ========== Config & Test Buttons ========== */
+.btn-sm {
+  font-size: 11.5px; font-weight: 600;
+  padding: 4px 11px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all var(--transition);
+  white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 3px;
+}
+.btn-sm-outline {
+  background: var(--white);
+  border-color: var(--neutral-300);
+  color: var(--neutral-700);
+}
+.btn-sm-outline:hover { border-color: var(--green-400); color: var(--green-700); background: var(--green-50); }
+.btn-sm-primary {
+  background: var(--green-600);
+  color: var(--white);
+  border-color: var(--green-600);
+}
+.btn-sm-primary:hover { background: var(--green-700); }
+.btn-sm-ghost {
+  background: transparent;
+  color: var(--neutral-500);
+  border-color: transparent;
+}
+.btn-sm-ghost:hover { color: var(--neutral-700); background: var(--neutral-100); }
+
+/* ========== Component Config Modal (Inline Slide-down) ========== */
+.comp-config-panel {
+  margin: 1px 14px 8px;
+  background: var(--neutral-50);
+  border: 1px solid var(--green-200);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: none;
+  animation: slideDown 0.2s ease-out;
+}
+.comp-config-panel.show { display: block; }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.comp-config-panel h4 {
+  font-size: 12.5px; font-weight: 600;
+  color: var(--green-800);
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--green-200);
+}
+.comp-config-footer {
+  display: flex; gap: 8px; margin-top: 12px; padding-top: 10px;
+  border-top: 1px solid var(--neutral-200);
+  justify-content: flex-end;
+}
+
+/* ========== Sample Code ========== */
+.sample-code-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.sample-code-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--neutral-200);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition);
+  background: var(--white);
+}
+.sample-code-item:hover { border-color: var(--green-300); background: var(--green-50); }
+.sample-code-item.selected {
+  border-color: var(--green-500);
+  background: var(--green-50);
+  box-shadow: 0 0 0 3px oklch(0.54 0.13 153 / 0.10);
+}
+.sample-code-item input[type="checkbox"] { display: none; }
+.sample-code-icon {
+  width: 34px; height: 34px;
+  background: var(--green-100);
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.sample-code-item.selected .sample-code-icon { background: var(--green-600); color: var(--white); }
+.sample-code-info { flex: 1; }
+.sample-code-name { font-size: 13px; font-weight: 600; color: var(--neutral-800); margin-bottom: 2px; }
+.sample-code-desc { font-size: 11.5px; color: var(--neutral-500); line-height: 1.5; }
+
+/* ========== Right Panel ========== */
+.preview-panel { position: sticky; top: 100px; }
+.preview-panel .section { margin-bottom: 16px; }
+.preview-tabs {
+  display: flex; border-bottom: 1px solid var(--neutral-200);
+  margin-bottom: 0;
+}
+.preview-tab {
+  padding: 10px 18px;
+  font-size: 13px; font-weight: 500;
+  cursor: pointer;
+  border: none; background: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  color: var(--neutral-600);
+  transition: all var(--transition);
+}
+.preview-tab:hover { color: var(--green-700); }
+.preview-tab.active { color: var(--green-700); font-weight: 600; border-bottom-color: var(--green-600); }
+.preview-content { padding: 16px 20px; }
+
+.preview-tree {
+  font-family: "SF Mono", "Menlo", "Consolas", monospace;
+  font-size: 12.5px; line-height: 1.9;
+  white-space: pre; color: var(--neutral-800);
+}
+.preview-tree .dir { color: var(--green-700); font-weight: 600; }
+.preview-tree .file { color: var(--neutral-700); }
+.preview-tree .comment { color: var(--neutral-500); font-style: italic; }
+
+.xml-preview {
+  font-family: "SF Mono", "Menlo", "Consolas", monospace;
+  font-size: 12px; line-height: 1.7;
+  background: oklch(0.18 0.008 155);
+  color: oklch(0.82 0.005 155);
+  padding: 16px; border-radius: var(--radius-md);
+  overflow-x: auto; white-space: pre;
+  max-height: 500px;
+}
+.xml-preview .tag { color: oklch(0.66 0.14 240); }
+.xml-preview .attr { color: oklch(0.72 0.12 200); }
+.xml-preview .val { color: oklch(0.68 0.14 80); }
+.xml-preview .comment { color: oklch(0.55 0.08 135); }
+
+.summary-list { list-style: none; font-size: 13px; }
+.summary-list li {
+  padding: 6px 0;
+  display: flex; align-items: center; gap: 8px;
+  border-bottom: 1px solid var(--neutral-100);
+}
+.summary-list li:last-child { border-bottom: none; }
+.summary-label { color: var(--neutral-500); font-size: 12px; min-width: 80px; }
+.summary-value { font-weight: 500; color: var(--neutral-800); }
+.summary-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 11px; font-weight: 600;
+  background: var(--green-100);
+  color: var(--green-700);
+  margin-right: 4px;
+}
+
+/* ========== Bottom Bar ========== */
+.generate-bar {
+  position: sticky; bottom: 0; z-index: 90;
+  background: oklch(0.99 0.001 155 / 0.92);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--neutral-200);
+  padding: 14px 28px;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 -2px 16px oklch(0 0 0 / 0.06);
+}
+.generate-info { font-size: 13px; color: var(--neutral-600); }
+.generate-info strong { color: var(--green-700); }
+.btn-generate {
+  background: linear-gradient(135deg, var(--green-800), var(--green-600));
+  color: var(--white);
+  border: none;
+  padding: 12px 44px;
+  border-radius: var(--radius-md);
+  font-size: 15px; font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition);
+  letter-spacing: 0.03em;
+  box-shadow: 0 2px 8px oklch(0.28 0.08 160 / 0.25);
+}
+.btn-generate:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px oklch(0.28 0.08 160 / 0.35);
+}
+.btn-generate:active { transform: translateY(0); }
+
+/* ========== Notification ========== */
+.note {
+  font-size: 12px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  margin-top: 10px;
+  line-height: 1.6;
+}
+.note-warning {
+  background: oklch(0.96 0.04 82);
+  color: oklch(0.45 0.08 78);
+  border: 1px solid oklch(0.9 0.08 82);
+}
+.note-info {
+  background: var(--green-50);
+  color: var(--green-800);
+  border: 1px solid var(--green-200);
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 1100px) {
+  .container { grid-template-columns: 1fr; }
+  .preview-panel { position: static; }
+  .sample-code-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .form-row, .form-row-3 { grid-template-columns: 1fr; }
+  .header-inner { flex-wrap: wrap; }
+  .header-badge { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-logo">邮</div>
+    <div>
+      <h1>中国邮政储蓄银行 · 工程脚手架平台</h1>
+      <div class="subtitle">统一技术栈选型 · 多环境配置管理 · 组件即选即测 · 工程化全覆盖 · 开箱即用</div>
+    </div>
+    <div class="header-badge">V3.0 · 演示版</div>
+  </div>
+</div>
+
+<!-- ==================== MAIN ==================== -->
+<div class="container">
+
+<!-- ========== LEFT: Configuration ========== -->
+<div>
+
+  <!-- Step 1: 项目基本信息 -->
+  <div class="section">
+    <div class="section-header open" onclick="toggleSection(this)">
+      <span class="step-num">1</span> 项目基本信息
+      <span class="arrow">▼</span>
+    </div>
+    <div class="section-body show">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Group ID<span class="required-star">*</span></label>
+          <input type="text" id="group" value="com.psbc" placeholder="com.psbc">
+        </div>
+        <div class="form-group">
+          <label>Artifact ID<span class="required-star">*</span></label>
+          <input type="text" id="artifact" placeholder="demo-service">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>项目名称<span class="required-star">*</span></label>
+        <input type="text" id="name" placeholder="邮储银行演示服务">
+      </div>
+      <div class="form-group">
+        <label>项目描述</label>
+        <input type="text" id="description" placeholder="基于邮储银行标准技术栈的项目">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Spring Boot 版本</label>
+          <select id="bootVersion">
+            <option value="3.5.12">3.5.12（推荐）</option>
+            <option value="2.7.18">2.7.18</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Java 版本</label>
+          <select id="javaVersion">
+            <option value="21">JDK 21（推荐）</option>
+            <option value="17">JDK 17</option>
+            <option value="11">JDK 11</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>基础包名</label>
+        <input type="text" id="basePackage" value="com.psbc.demo" placeholder="com.psbc.demo">
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2: Maven 私服配置 -->
+  <div class="section">
+    <div class="section-header open" onclick="toggleSection(this)">
+      <span class="step-num">2</span> Maven 私服仓库配置
+      <span class="arrow">▼</span>
+    </div>
+    <div class="section-body show">
+      <div class="note note-info" style="margin-top:0;margin-bottom:12px;">
+        配置行内私有 Maven 仓库地址，替换默认的公网 Maven Central，确保依赖下载安全可控。
+      </div>
+      <div class="form-group">
+        <label>Release 仓库 URL</label>
+        <input type="text" id="mvnReleaseUrl" placeholder="https://nexus.psbc.com/repository/maven-releases/">
+      </div>
+      <div class="form-group">
+        <label>Snapshot 仓库 URL</label>
+        <input type="text" id="mvnSnapshotUrl" placeholder="https://nexus.psbc.com/repository/maven-snapshots/">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>认证用户名</label>
+          <input type="text" id="mvnUsername" placeholder="deployment">
+        </div>
+        <div class="form-group">
+          <label>认证密码</label>
+          <input type="password" id="mvnPassword" placeholder="••••••••">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Mirror 镜像地址（可选，覆盖 central）</label>
+        <input type="text" id="mvnMirror" placeholder="https://nexus.psbc.com/repository/maven-public/">
+      </div>
+      <div style="display:flex; gap:12px; margin-top:8px;">
+        <button class="btn-sm btn-sm-outline" onclick="testMavenConnection()" type="button">测试连接</button>
+        <span id="mvnTestResult" style="font-size:12px; line-height:28px; color:var(--neutral-500);"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3: 多环境配置 -->
+  <div class="section">
+    <div class="section-header open" onclick="toggleSection(this)">
+      <span class="step-num">3</span> 多环境选择 &amp; 可视化配置
+      <span class="arrow">▼</span>
+    </div>
+    <div class="section-body show">
+      <p style="font-size:12.5px; color:var(--neutral-600); margin-bottom:10px;">
+        选择目标部署环境，系统将为每个环境生成独立的配置文件（application-{env}.yml）
+      </p>
+      <div class="env-tags" id="envTags">
+        <span class="env-tag selected" data-env="dev" onclick="toggleEnv(this)"><span class="env-dot"></span>dev</span>
+        <span class="env-tag" data-env="sit" onclick="toggleEnv(this)"><span class="env-dot"></span>sit</span>
+        <span class="env-tag" data-env="t1" onclick="toggleEnv(this)"><span class="env-dot"></span>t1</span>
+        <span class="env-tag" data-env="t2" onclick="toggleEnv(this)"><span class="env-dot"></span>t2</span>
+        <span class="env-tag" data-env="t3" onclick="toggleEnv(this)"><span class="env-dot"></span>t3</span>
+        <span class="env-tag" data-env="t4" onclick="toggleEnv(this)"><span class="env-dot"></span>t4</span>
+        <span class="env-tag" data-env="et" onclick="toggleEnv(this)"><span class="env-dot"></span>et</span>
+        <span class="env-tag" data-env="zct" onclick="toggleEnv(this)"><span class="env-dot"></span>zct</span>
+        <span class="env-tag" data-env="cssc" onclick="toggleEnv(this)"><span class="env-dot"></span>cssc</span>
+        <span class="env-tag" data-env="prod" onclick="toggleEnv(this)"><span class="env-dot"></span>prod</span>
+      </div>
+
+      <!-- Env Config Panel -->
+      <div class="env-config-panel" id="envConfigPanel">
+        <div class="env-config-tabs" id="envConfigTabs"></div>
+        <div class="env-config-body" id="envConfigBody"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4: 组件依赖选择（带测试配置） -->
+  <div class="section">
+    <div class="section-header open" onclick="toggleSection(this)">
+      <span class="step-num">4</span> 组件依赖选择 &amp; 配置测试
+      <span class="arrow">▼</span>
+    </div>
+    <div class="section-body show" id="compSection">
+    </div>
+  </div>
+
+  <!-- Step 5: 示例代码 -->
+  <div class="section">
+    <div class="section-header open" onclick="toggleSection(this)">
+      <span class="step-num">5</span> 示例代码生成
+      <span class="arrow">▼</span>
+    </div>
+    <div class="section-body show">
+      <p style="font-size:12.5px; color:var(--neutral-600); margin-bottom:12px;">
+        选择需要预置的示例代码模块，下载后直接可用，加速开发启动
+      </p>
+      <div class="sample-code-grid" id="sampleCodeGrid">
+        <label class="sample-code-item selected" data-code="exception">
+          <input type="checkbox" checked>
+          <div class="sample-code-icon">🛡</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">全局异常处理</div>
+            <div class="sample-code-desc">统一异常拦截、业务异常定义、参数校验异常、通用错误响应体</div>
+          </div>
+        </label>
+        <label class="sample-code-item selected" data-code="auth">
+          <input type="checkbox" checked>
+          <div class="sample-code-icon">🔐</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">权限控制示例</div>
+            <div class="sample-code-desc">基于 Spring Security / 自定义注解的 RBAC 权限校验、JWT Token 管理</div>
+          </div>
+        </label>
+        <label class="sample-code-item selected" data-code="util">
+          <input type="checkbox" checked>
+          <div class="sample-code-icon">🧰</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">常用工具类</div>
+            <div class="sample-code-desc">日期处理、字符串工具、加密解密、JSON 工具、文件操作、Bean 拷贝</div>
+          </div>
+        </label>
+        <label class="sample-code-item" data-code="filter">
+          <input type="checkbox">
+          <div class="sample-code-icon">🔍</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">Filter &amp; 拦截器</div>
+            <div class="sample-code-desc">请求日志拦截、跨域处理、XSS 防护、重复提交拦截、TraceId 注入</div>
+          </div>
+        </label>
+        <label class="sample-code-item" data-code="structure">
+          <input type="checkbox" checked>
+          <div class="sample-code-icon">📐</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">代码分层结构</div>
+            <div class="sample-code-desc">Controller → Service → Manager → DAO 分层骨架，DTO/VO/BO 转换示例</div>
+          </div>
+        </label>
+        <label class="sample-code-item" data-code="log">
+          <input type="checkbox">
+          <div class="sample-code-icon">📋</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">日志规范示例</div>
+            <div class="sample-code-desc">Logback 配置模板、操作日志 AOP 注解、敏感信息脱敏、ELK 日志格式</div>
+          </div>
+        </label>
+        <label class="sample-code-item" data-code="test">
+          <input type="checkbox">
+          <div class="sample-code-icon">🧪</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">单元测试示例</div>
+            <div class="sample-code-desc">JUnit 5 + Mockito 测试模板、Controller 层集成测试、数据库测试基类</div>
+          </div>
+        </label>
+        <label class="sample-code-item" data-code="api">
+          <input type="checkbox" checked>
+          <div class="sample-code-icon">📡</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">统一响应体 &amp; API 规范</div>
+            <div class="sample-code-desc">Result&lt;T&gt; 统一返回体、分页封装、状态码枚举、Swagger 文档注解</div>
+          </div>
+        </label>
+        <label class="sample-code-item" data-code="cache">
+          <input type="checkbox" checked>
+          <div class="sample-code-icon">⚡</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">缓存服务封装</div>
+            <div class="sample-code-desc">Redis 缓存抽象层、@Cacheable 注解模板、缓存穿透/击穿/雪崩防护策略</div>
+          </div>
+        </label>
+        <label class="sample-code-item" data-code="scheduled">
+          <input type="checkbox">
+          <div class="sample-code-icon">⏰</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">定时任务模板</div>
+            <div class="sample-code-desc">@Scheduled 注解、分布式调度（XXL-Job）、任务锁防并发、执行日志记录</div>
+          </div>
+        </label>
+        <label class="sample-code-item" data-code="file">
+          <input type="checkbox">
+          <div class="sample-code-icon">📁</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">文件上传下载</div>
+            <div class="sample-code-desc">多文件上传、分片上传、断点续传、文件类型校验、流式下载、OSS 对接</div>
+          </div>
+        </label>
+        <label class="sample-code-item" data-code="aop">
+          <input type="checkbox" checked>
+          <div class="sample-code-icon">🪝</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">AOP 切面编程</div>
+            <div class="sample-code-desc">自定义注解、操作日志记录、方法耗时统计、接口幂等拦截、数据权限过滤</div>
+          </div>
+        </label>
+        <label class="sample-code-item" data-code="idempotent">
+          <input type="checkbox">
+          <div class="sample-code-icon">🔁</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">幂等性防重提交</div>
+            <div class="sample-code-desc">基于 Token + Redis 的防重复提交注解、表单唯一标识校验、乐观锁模板</div>
+          </div>
+        </label>
+        <label class="sample-code-item" data-code="lock">
+          <input type="checkbox">
+          <div class="sample-code-icon">🔒</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">分布式锁</div>
+            <div class="sample-code-desc">Redis 分布式锁注解封装、可重入锁、读写锁、锁续期（看门狗机制）</div>
+          </div>
+        </label>
+        <label class="sample-code-item" data-code="excel">
+          <input type="checkbox">
+          <div class="sample-code-icon">📊</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">Excel 导入导出</div>
+            <div class="sample-code-desc">EasyExcel 大数据量导入导出、模板填充、数据校验、异步导出 + 下载回调</div>
+          </div>
+        </label>
+        <label class="sample-code-item" data-code="health">
+          <input type="checkbox">
+          <div class="sample-code-icon">💚</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">健康检查与优雅停机</div>
+            <div class="sample-code-desc">Spring Actuator 端点配置、自定义健康指标、服务就绪探针、优雅停机回调</div>
+          </div>
+        </label>
+        <label class="sample-code-item" data-code="flyway">
+          <input type="checkbox" checked>
+          <div class="sample-code-icon">🗃️</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">数据库迁移管理</div>
+            <div class="sample-code-desc">Flyway 迁移脚本规范、版本命名策略、基线初始化、多环境迁移策略、回滚方案</div>
+          </div>
+        </label>
+        <label class="sample-code-item" data-code="cicd">
+          <input type="checkbox" checked>
+          <div class="sample-code-icon">🚀</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">CI/CD 流水线模板</div>
+            <div class="sample-code-desc">Jenkinsfile / GitLab CI 模板、编译→单测→Sonar扫描→构建镜像→部署标准流水线</div>
+          </div>
+        </label>
+        <label class="sample-code-item" data-code="docker">
+          <input type="checkbox" checked>
+          <div class="sample-code-icon">🐳</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">容器化与 K8s 部署</div>
+            <div class="sample-code-desc">Dockerfile 多阶段构建、K8s Deployment/Service/ConfigMap、探针配置、HPA 自动扩缩</div>
+          </div>
+        </label>
+        <label class="sample-code-item" data-code="codescan">
+          <input type="checkbox">
+          <div class="sample-code-icon">🔬</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">代码扫描与规范</div>
+            <div class="sample-code-desc">SonarQube 配置、Checkstyle 规则集、SpotBugs 静态分析、代码覆盖率报告模板</div>
+          </div>
+        </label>
+        <label class="sample-code-item" data-code="encrypt">
+          <input type="checkbox" checked>
+          <div class="sample-code-icon">🔐</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">加密与数据脱敏</div>
+            <div class="sample-code-desc">Jasypt 配置加密、国密 SM2/SM4 算法封装、字段级脱敏注解、日志敏感信息过滤</div>
+          </div>
+        </label>
+        <label class="sample-code-item" data-code="dbinit">
+          <input type="checkbox">
+          <div class="sample-code-icon">🌱</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">数据库初始化脚本</div>
+            <div class="sample-code-desc">建库建表 DDL 模板、基础数据 Seed、本地 H2 快速初始化、Testcontainers 集成测试</div>
+          </div>
+        </label>
+        <label class="sample-code-item" data-code="feature">
+          <input type="checkbox">
+          <div class="sample-code-icon">🎛️</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">特性开关与灰度发布</div>
+            <div class="sample-code-desc">Feature Flag 注解封装、Apollo 动态开关、按用户/比例灰度、A/B 测试路由</div>
+          </div>
+        </label>
+        <label class="sample-code-item" data-code="request">
+          <input type="checkbox">
+          <div class="sample-code-icon">🔄</div>
+          <div class="sample-code-info">
+            <div class="sample-code-name">全局请求增强</div>
+            <div class="sample-code-desc">RequestBody 可重复读包装器、接口耗时统计、TraceId 注入、统一请求/响应日志</div>
+          </div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- 淘汰组件提示 -->
+  <div class="note note-warning">
+    <strong>淘汰 &amp; 限制清单：</strong><br>
+    已淘汰：memcached, Struts/Struts2, DBCP, C3P0, Log4j1, Hibernate, Activiti, jQuery, Bootstrap, Elasticjob, kettle, Minio, Influxdb<br>
+    限制使用（需审批）：Mariadb, Jetty, ActiveMQ
+  </div>
+</div>
+
+<!-- ========== RIGHT: Preview ========== -->
+<div class="preview-panel">
+  <div class="section">
+    <div class="section-header" style="cursor:default;">
+      <span class="step-num" style="background:var(--blue-700);">📁</span> 工程预览
+    </div>
+    <div class="preview-tabs">
+      <button class="preview-tab active" onclick="switchPreviewTab('tree',this)">目录结构</button>
+      <button class="preview-tab" onclick="switchPreviewTab('pom',this)">pom.xml</button>
+      <button class="preview-tab" onclick="switchPreviewTab('summary',this)">配置总览</button>
+    </div>
+    <div class="preview-content">
+      <div class="preview-tree" id="treePreview"></div>
+      <div class="xml-preview" id="pomPreview" style="display:none;"></div>
+      <div id="summaryPreview" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<!-- ==================== BOTTOM BAR ==================== -->
+<div class="generate-bar">
+  <div class="generate-info">
+    已选 <strong id="selectedCount">0</strong> 个组件 ·
+    <strong id="selectedEnvCount">1</strong> 个环境 ·
+    <strong id="selectedSampleCount">5</strong> 个示例模块
+  </div>
+  <button class="btn-generate" onclick="generateProject()">生成工程</button>
+</div>
+
+<!-- ==================== SCRIPTS ==================== -->
+<script>
+// ========== ENV Config Templates ==========
+const ENV_CONFIG_FIELDS = {
+  common: [
+    { key: 'server.port', label: '服务端口', placeholder: '8080' },
+    { key: 'server.servlet.context-path', label: '上下文路径', placeholder: '/api' },
+  ],
+  db: [
+    { key: 'spring.datasource.url', label: '数据库连接URL', placeholder: 'jdbc:postgresql://host:5432/db' },
+    { key: 'spring.datasource.username', label: '数据库用户名', placeholder: 'app_user' },
+    { key: 'spring.datasource.password', label: '数据库密码', placeholder: '••••••••', type: 'password' },
+  ],
+  redis: [
+    { key: 'spring.data.redis.host', label: 'Redis Host', placeholder: 'redis-host' },
+    { key: 'spring.data.redis.port', label: 'Redis Port', placeholder: '6379' },
+    { key: 'spring.data.redis.password', label: 'Redis 密码', placeholder: '••••••••', type: 'password' },
+    { key: 'spring.data.redis.database', label: 'Redis DB Index', placeholder: '0' },
+  ],
+  nacos: [
+    { key: 'spring.cloud.nacos.discovery.server-addr', label: 'Nacos 地址', placeholder: 'nacos-host:8848' },
+    { key: 'spring.cloud.nacos.discovery.namespace', label: '命名空间', placeholder: 'dev' },
+  ],
+  kafka: [
+    { key: 'spring.kafka.bootstrap-servers', label: 'Kafka 地址', placeholder: 'kafka-host:9092' },
+    { key: 'spring.kafka.consumer.group-id', label: '消费组ID', placeholder: 'demo-group' },
+  ],
+};
+
+// ========== ENV Display Names ==========
+const ENV_DISPLAY = {
+  dev: '开发环境', sit: '系统集成测试',
+  t1: '测试环境 T1', t2: '测试环境 T2', t3: '测试环境 T3', t4: '测试环境 T4',
+  et: '体验测试', zct: '准生产测试', cssc: '生产仿真',
+  prod: '生产环境'
+};
+
+// ========== Component Catalog ==========
+const COMPONENTS = {
+  base: { icon: '🗄️', label: '基础类（数据库 / 缓存 / 容器）', items: [
+    { name:'Redis', ver:'7.2.13', tag:'recommended', config:'redis', gav:'org.springframework.boot:spring-boot-starter-data-redis' },
+    { name:'PostgreSQL', ver:'17.9', tag:'recommended', config:'db', gav:'org.postgresql:postgresql' },
+    { name:'OpenGauss', ver:'6.0', config:'db', gav:'org.opengauss:opengauss-jdbc' },
+    { name:'Elasticsearch', ver:'8.19.10', gav:'co.elastic.clients:elasticsearch-java' },
+    { name:'MongoDB', ver:'6.0.23', gav:'org.springframework.boot:spring-boot-starter-data-mongodb' },
+    { name:'ClickHouse', ver:'24.8.14', gav:'com.clickhouse:clickhouse-jdbc' },
+    { name:'Doris', ver:'2.1.4', gav:'org.apache.doris:doris-client' },
+    { name:'Neo4j', ver:'5.26.21', gav:'org.springframework.boot:spring-boot-starter-data-neo4j' },
+    { name:'Kubernetes', ver:'1.33.7', gav:'' },
+    { name:'Harbor', ver:'2.14.2', gav:'' },
+  ]},
+  core: { icon: '⚙️', label: '应用开发类（核心框架）', items: [
+    { name:'Spring Boot', ver:'3.5.12', tag:'required', gav:'org.springframework.boot:spring-boot-starter' },
+    { name:'Spring Framework', ver:'6.2.17', tag:'required', gav:'' },
+    { name:'Spring Cloud', ver:'2025.0.1', gav:'' },
+    { name:'Spring Cloud Gateway', ver:'3.1.9', gav:'org.springframework.cloud:spring-cloud-starter-gateway' },
+    { name:'Nacos', ver:'2.5.2', config:'nacos', gav:'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery' },
+    { name:'Dubbo', ver:'3.2.6', gav:'org.apache.dubbo:dubbo-spring-boot-starter' },
+    { name:'Sentinel', ver:'1.8.9', gav:'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel' },
+    { name:'Apollo', ver:'2.5.0', gav:'com.ctrip.framework.apollo:apollo-client' },
+  ]},
+  data: { icon: '💾', label: '数据访问与持久层', items: [
+    { name:'MyBatis', ver:'3.5.19', gav:'org.mybatis.spring.boot:mybatis-spring-boot-starter' },
+    { name:'MyBatis-Plus', ver:'3.5.7', gav:'com.baomidou:mybatis-plus-spring-boot3-starter' },
+    { name:'Druid', ver:'1.2.8', gav:'com.alibaba:druid-spring-boot-starter' },
+    { name:'ShardingSphere', ver:'5.5.2', gav:'org.apache.shardingsphere:shardingsphere-jdbc' },
+    { name:'Flyway', ver:'7.0.0', gav:'' },
+  ]},
+  mq: { icon: '📨', label: '消息中间件', items: [
+    { name:'Kafka', ver:'3.9.1', config:'kafka', gav:'org.springframework.kafka:spring-kafka' },
+    { name:'RabbitMQ', ver:'4.0.8', gav:'org.springframework.boot:spring-boot-starter-amqp' },
+    { name:'RocketMQ', ver:'5.3.1', tag:'recommended', gav:'org.apache.rocketmq:rocketmq-spring-boot-starter' },
+  ]},
+  web: { icon: '🌐', label: 'Web 服务与前端', items: [
+    { name:'Nginx', ver:'1.28.2', gav:'' },
+    { name:'Tomcat', ver:'9.0.111', gav:'' },
+    { name:'Swagger', ver:'1.5.24', gav:'' },
+    { name:'Flowable', ver:'6.5.0', gav:'org.flowable:flowable-spring-boot-starter' },
+  ]},
+  bigdata: { icon: '🤖', label: '大数据与 AI', items: [
+    { name:'Hadoop', ver:'3.3.6', gav:'' },
+    { name:'Spark', ver:'3.4.3', gav:'' },
+    { name:'Flink', ver:'1.17.2', gav:'' },
+    { name:'Hive', ver:'3.1.3', gav:'' },
+    { name:'Dify', ver:'1.9.1', gav:'' },
+  ]},
+  monitor: { icon: '📊', label: '日志与监控', items: [
+    { name:'Logback', ver:'1.5.26', tag:'required', gav:'' },
+    { name:'Slf4j', ver:'2.0.17', tag:'required', gav:'' },
+    { name:'SkyWalking', ver:'10.3.0', gav:'' },
+    { name:'Prometheus', ver:'2.53.5', gav:'' },
+    { name:'Grafana', ver:'12.4.0', gav:'' },
+    { name:'Filebeat', ver:'8.19.10', gav:'' },
+  ]},
+  codegen: { icon: '🔧', label: '代码增强与效率工具', items: [
+    { name:'Lombok', ver:'1.18.34', tag:'recommended', gav:'org.projectlombok:lombok' },
+    { name:'MapStruct', ver:'1.6.3', tag:'recommended', gav:'org.mapstruct:mapstruct-processor' },
+    { name:'Knife4j', ver:'4.5.0', gav:'com.github.xiaoymin:knife4j-openapi3-jakarta-spring-boot-starter' },
+    { name:'Jasypt', ver:'3.0.5', gav:'com.github.ulisesbocchio:jasypt-spring-boot-starter' },
+    { name:'Hutool', ver:'5.8.32', gav:'cn.hutool:hutool-all' },
+  ]},
+  devtools: { icon: '🛠️', label: '本地开发与测试工具', items: [
+    { name:'DevTools', ver:'3.5.12', tag:'recommended', gav:'org.springframework.boot:spring-boot-devtools' },
+    { name:'Testcontainers', ver:'1.20.4', tag:'recommended', gav:'org.testcontainers:testcontainers' },
+    { name:'H2-Dev', ver:'2.2.224', gav:'com.h2database:h2' },
+  ]},
+};
+
+const BANNED = ['memcached','Struts','Struts2','DBCP','C3P0','Log4j','Log4j1','Hibernate','Activiti','jQuery','Bootstrap','Elasticjob','kettle','Minio','Influxdb'];
+const RESTRICTED = ['Mariadb','Jetty','ActiveMQ'];
+
+// ========== State ==========
+const selectedEnvs = new Set(['dev']);
+let activeEnvTab = 'dev';
+
+// ========== Section Toggle ==========
+function toggleSection(el) {
+  el.classList.toggle('open');
+  el.nextElementSibling.classList.toggle('show');
+}
+
+// ========== Environment Tags ==========
+function toggleEnv(el) {
+  const env = el.dataset.env;
+  if (env === 'prod' && !selectedEnvs.has('prod') && !confirm('生产环境配置将包含严格的资源限制与安全策略，确认添加？')) return;
+  if (selectedEnvs.has(env)) {
+    if (selectedEnvs.size > 1) {
+      selectedEnvs.delete(env);
+      el.classList.remove('selected');
+    }
+  } else {
+    selectedEnvs.add(env);
+    el.classList.add('selected');
+  }
+  if (activeEnvTab === env && !selectedEnvs.has(env)) {
+    activeEnvTab = [...selectedEnvs][0];
+  }
+  renderEnvConfigPanel();
+  updatePreview();
+}
+
+function renderEnvConfigPanel() {
+  const tabsContainer = document.getElementById('envConfigTabs');
+  const bodyContainer = document.getElementById('envConfigBody');
+  const envs = [...selectedEnvs];
+
+  // Tabs
+  tabsContainer.innerHTML = envs.map(e =>
+    `<button class="env-config-tab${e === activeEnvTab ? ' active' : ''}" onclick="switchEnvTab('${e}')">${e.toUpperCase()} · ${ENV_DISPLAY[e]}</button>`
+  ).join('');
+
+  // Bodies
+  bodyContainer.innerHTML = envs.map(e => {
+    const fields = [
+      ...ENV_CONFIG_FIELDS.common,
+      ...(getSelectedComponentConfigFields()),
+    ];
+    return `<div class="env-pane${e === activeEnvTab ? ' active' : ''}" data-env="${e}">
+      ${fields.map(f => `
+        <div class="form-group">
+          <label>${f.label}</label>
+          <input type="${f.type || 'text'}" data-env="${e}" data-key="${f.key}" placeholder="${f.placeholder}">
+        </div>
+      `).join('')}
+    </div>`;
+  }).join('');
+
+  document.getElementById('selectedEnvCount').textContent = envs.length;
+}
+
+function getSelectedComponentConfigFields() {
+  const fields = [];
+  const checked = document.querySelectorAll('#compSection input[type="checkbox"]:checked');
+  checked.forEach(cb => {
+    const configKey = cb.dataset.config;
+    if (configKey && ENV_CONFIG_FIELDS[configKey]) {
+      ENV_CONFIG_FIELDS[configKey].forEach(f => {
+        if (!fields.find(x => x.key === f.key)) fields.push(f);
+      });
+    }
+  });
+  return fields;
+}
+
+function switchEnvTab(env) {
+  activeEnvTab = env;
+  document.querySelectorAll('.env-config-tab').forEach(t => t.classList.toggle('active', t.textContent.startsWith(env.toUpperCase())));
+  document.querySelectorAll('.env-pane').forEach(p => p.classList.toggle('active', p.dataset.env === env));
+}
+
+// ========== Render Components ==========
+function renderComponents() {
+  const container = document.getElementById('compSection');
+  let html = '';
+  for (const [catKey, cat] of Object.entries(COMPONENTS)) {
+    html += `<div class="comp-category">
+      <div class="comp-cat-header open" onclick="toggleCompCat(this)">
+        <span><span class="cat-icon">${cat.icon}</span>${cat.label}</span>
+        <span style="font-size:11px;color:var(--neutral-500);">▼</span>
+      </div>
+      <div class="comp-cat-body show" data-cat="${catKey}">`;
+
+    cat.items.forEach((item, idx) => {
+      const checked = item.tag === 'required' ? ' checked' : '';
+      const configId = `${catKey}-${idx}`;
+      html += `<div class="comp-item">
+        <input type="checkbox" data-dep="${item.name}" data-ver="${item.ver}" data-cat="${catKey}" data-config="${item.config || ''}" data-gav="${item.gav || ''}" id="comp_${configId}"${checked}${item.tag === 'required' ? ' disabled' : ''}>
+        <span class="comp-name">${item.name}</span>
+        <span class="comp-ver">${item.ver}</span>`;
+      if (item.tag) {
+        html += `<span class="comp-tag ${item.tag}">${item.tag === 'required' ? '必选' : '推荐'}</span>`;
+      }
+      if (item.config) {
+        html += `<button class="btn-sm btn-sm-outline" onclick="toggleCompConfig('${configId}');event.stopPropagation();" type="button">配置</button>`;
+      }
+      html += `</div>`;
+
+      if (item.config) {
+        html += `<div class="comp-config-panel" id="config_${configId}">
+          <h4>${item.name} 常用配置</h4>`;
+        const fields = ENV_CONFIG_FIELDS[item.config] || [];
+        fields.forEach(f => {
+          html += `<div class="form-group">
+            <label>${f.label}</label>
+            <input type="${f.type || 'text'}" placeholder="${f.placeholder}">
+          </div>`;
+        });
+        html += `<div class="comp-config-footer">
+          <button class="btn-sm btn-sm-ghost" onclick="toggleCompConfig('${configId}');event.stopPropagation();" type="button">跳过，以后配置</button>
+          <button class="btn-sm btn-sm-primary" onclick="toggleCompConfig('${configId}');event.stopPropagation();" type="button">保存配置</button>
+          <button class="btn-sm btn-sm-outline" onclick="testCompConfig('${item.name}','${configId}');event.stopPropagation();" type="button">测试连接</button>
+        </div></div>`;
+      }
+    });
+
+    html += `</div></div>`;
+  }
+  container.innerHTML = html;
+
+  // Bind change events
+  container.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      updatePreview();
+      renderEnvConfigPanel();
+    });
+  });
+}
+
+function toggleCompCat(el) {
+  const open = el.classList.toggle('open');
+  const arrow = el.querySelector('span:last-child');
+  arrow.textContent = open ? '▼' : '▶';
+  el.nextElementSibling.classList.toggle('show');
+}
+
+function toggleCompConfig(configId) {
+  const panel = document.getElementById('config_' + configId);
+  panel.classList.toggle('show');
+}
+
+function testCompConfig(name, configId) {
+  const panel = document.getElementById('config_' + configId);
+  const inputs = panel.querySelectorAll('input');
+  const filled = [...inputs].filter(i => i.value.trim()).length;
+  const total = inputs.length;
+  if (filled === 0) {
+    alert(`「${name}」未填写任何配置参数，请先填写后测试。`);
+    return;
+  }
+  alert(`「${name}」配置测试：已填写 ${filled}/${total} 项参数。\n\n（演示模式：实际环境中将连接目标服务并返回连通性结果）`);
+}
+
+function testMavenConnection() {
+  const releaseUrl = document.getElementById('mvnReleaseUrl').value;
+  const snapshotUrl = document.getElementById('mvnSnapshotUrl').value;
+  const resultEl = document.getElementById('mvnTestResult');
+  if (!releaseUrl && !snapshotUrl) {
+    resultEl.textContent = '请至少填写一个仓库地址';
+    resultEl.style.color = 'var(--red-600)';
+    return;
+  }
+  resultEl.textContent = '连接测试中...';
+  resultEl.style.color = 'var(--neutral-600)';
+  setTimeout(() => {
+    resultEl.textContent = '连接成功（演示模式）';
+    resultEl.style.color = 'var(--green-700)';
+  }, 800);
+}
+
+// ========== Sample Code ==========
+document.querySelectorAll('.sample-code-item').forEach(item => {
+  item.addEventListener('click', function(e) {
+    // Label 已自动切换 checkbox，只需同步 selected 样式
+    const cb = this.querySelector('input[type="checkbox"]');
+    this.classList.toggle('selected', cb.checked);
+    updatePreview();
+  });
+});
+
+// ========== Preview ==========
+function switchPreviewTab(tab, btn) {
+  document.querySelectorAll('.preview-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('treePreview').style.display = tab === 'tree' ? 'block' : 'none';
+  document.getElementById('pomPreview').style.display = tab === 'pom' ? 'block' : 'none';
+  document.getElementById('summaryPreview').style.display = tab === 'summary' ? 'block' : 'none';
+  if (tab === 'summary') renderSummary();
+}
+
+function getSelectedDeps() {
+  const deps = [];
+  document.querySelectorAll('#compSection input[type="checkbox"]:checked').forEach(cb => {
+    if (cb.dataset.dep) {
+      deps.push({ name: cb.dataset.dep, version: cb.dataset.ver, category: cb.dataset.cat, gav: cb.dataset.gav, config: cb.dataset.config });
+    }
+  });
+  return deps;
+}
+
+function getSelectedSamples() {
+  const samples = [];
+  document.querySelectorAll('#sampleCodeGrid .sample-code-item.selected').forEach(item => {
+    samples.push(item.dataset.code);
+  });
+  return samples;
+}
+
+function updatePreview() {
+  const deps = getSelectedDeps();
+  const samples = getSelectedSamples();
+  const artifact = document.getElementById('artifact').value || 'demo-service';
+  const group = document.getElementById('group').value || 'com.psbc';
+  const basePkg = document.getElementById('basePackage').value || 'com.psbc.demo';
+  const bootVer = document.getElementById('bootVersion').value || '3.5.12';
+  const envs = [...selectedEnvs];
+  const pkgPath = basePkg.replace(/\./g, '/');
+
+  document.getElementById('selectedCount').textContent = deps.length;
+  document.getElementById('selectedEnvCount').textContent = envs.length;
+  document.getElementById('selectedSampleCount').textContent = samples.length;
+
+  // Tree preview
+  let tree = `<span class="dir">${artifact}/</span>\n`;
+  tree += `├── <span class="file">pom.xml</span>\n`;
+  tree += `├── <span class="file">settings.xml</span>  <span class="comment"># Maven私服配置</span>\n`;
+  tree += `├── <span class="file">.gitignore</span>\n`;
+  tree += `├── <span class="file">README.md</span>\n`;
+  tree += `├── <span class="file">.editorconfig</span>\n`;
+  tree += `├── <span class="file">Dockerfile</span>\n`;
+  if (samples.includes('cicd')) {
+    tree += `├── <span class="file">Jenkinsfile</span>  <span class="comment"># CI/CD 流水线</span>\n`;
+  }
+  if (samples.includes('docker')) {
+    tree += `├── <span class="dir">k8s/</span>  <span class="comment"># K8s 部署清单</span>\n`;
+  }
+  if (samples.includes('codescan')) {
+    tree += `├── <span class="file">checkstyle.xml</span>  <span class="comment"># 代码规范配置</span>\n`;
+  }
+  tree += `├── <span class="dir">src/main/java/${pkgPath}/</span>\n`;
+  tree += `│   ├── <span class="file">Application.java</span>\n`;
+  tree += `│   ├── <span class="dir">controller/</span>\n`;
+  tree += `│   ├── <span class="dir">service/</span>\n`;
+  tree += `│   ├── <span class="dir">manager/</span>\n`;
+  tree += `│   ├── <span class="dir">mapper/</span>\n`;
+  tree += `│   ├── <span class="dir">config/</span>\n`;
+  tree += `│   ├── <span class="dir">model/</span>\n`;
+  tree += `│   │   ├── <span class="dir">dto/</span>\n`;
+  tree += `│   │   ├── <span class="dir">vo/</span>\n`;
+  tree += `│   │   └── <span class="dir">bo/</span>\n`;
+
+  if (samples.includes('exception')) {
+    tree += `│   ├── <span class="dir">exception/</span>  <span class="comment"># 全局异常处理</span>\n`;
+  }
+  if (samples.includes('auth')) {
+    tree += `│   ├── <span class="dir">security/</span>  <span class="comment"># 权限控制</span>\n`;
+  }
+  if (samples.includes('util')) {
+    tree += `│   ├── <span class="dir">util/</span>  <span class="comment"># 常用工具类</span>\n`;
+  }
+  if (samples.includes('filter')) {
+    tree += `│   ├── <span class="dir">filter/</span>  <span class="comment"># 过滤器 & 拦截器</span>\n`;
+  }
+  if (samples.includes('cache')) {
+    tree += `│   ├── <span class="dir">cache/</span>  <span class="comment"># 缓存服务封装</span>\n`;
+  }
+  if (samples.includes('scheduled')) {
+    tree += `│   ├── <span class="dir">task/</span>  <span class="comment"># 定时任务</span>\n`;
+  }
+  if (samples.includes('file')) {
+    tree += `│   ├── <span class="dir">upload/</span>  <span class="comment"># 文件上传下载</span>\n`;
+  }
+  if (samples.includes('aop')) {
+    tree += `│   ├── <span class="dir">aspect/</span>  <span class="comment"># AOP 切面</span>\n`;
+  }
+  if (samples.includes('idempotent')) {
+    tree += `│   ├── <span class="dir">idempotent/</span>  <span class="comment"># 幂等性防重</span>\n`;
+  }
+  if (samples.includes('lock')) {
+    tree += `│   ├── <span class="dir">lock/</span>  <span class="comment"># 分布式锁</span>\n`;
+  }
+  if (samples.includes('excel')) {
+    tree += `│   ├── <span class="dir">excel/</span>  <span class="comment"># Excel 导入导出</span>\n`;
+  }
+  if (samples.includes('health')) {
+    tree += `│   ├── <span class="dir">health/</span>  <span class="comment"># 健康检查</span>\n`;
+  }
+  if (samples.includes('encrypt')) {
+    tree += `│   ├── <span class="dir">encrypt/</span>  <span class="comment"># 加密脱敏</span>\n`;
+  }
+  if (samples.includes('feature')) {
+    tree += `│   ├── <span class="dir">feature/</span>  <span class="comment"># 特性开关</span>\n`;
+  }
+  if (samples.includes('request')) {
+    tree += `│   ├── <span class="dir">interceptor/</span>  <span class="comment"># 请求增强</span>\n`;
+  }
+  if (samples.includes('log')) {
+    tree += `│   └── <span class="dir">aop/</span>  <span class="comment"># 日志切面</span>\n`;
+  }
+
+  tree += `├── <span class="dir">src/main/resources/</span>\n`;
+  envs.forEach(e => {
+    tree += `│   ├── <span class="file">application-${e}.yml</span>  <span class="comment"># ${ENV_DISPLAY[e]}</span>\n`;
+  });
+  tree += `│   ├── <span class="file">application.yml</span>\n`;
+  tree += `│   ├── <span class="file">logback-spring.xml</span>\n`;
+  if (samples.includes('flyway')) {
+    tree += `│   ├── <span class="dir">db/migration/</span>  <span class="comment"># Flyway 迁移脚本</span>\n`;
+  }
+  if (samples.includes('dbinit')) {
+    tree += `│   ├── <span class="dir">db/init/</span>  <span class="comment"># 建表 DDL</span>\n`;
+  }
+  if (samples.includes('encrypt')) {
+    tree += `│   └── <span class="file">enc.properties</span>  <span class="comment"># Jasypt 加密配置</span>\n`;
+  }
+  tree += `├── <span class="dir">src/test/java/${pkgPath}/</span>\n`;
+  tree += `└── <span class="comment"># ${deps.length} 依赖 · ${envs.length} 环境 · ${samples.length} 示例模块</span>\n`;
+  document.getElementById('treePreview').innerHTML = tree;
+
+  // POM preview
+  let pom = `<span class="comment">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>\n`;
+  pom += `<span class="tag">&lt;project&gt;</span>\n`;
+  pom += `  <span class="tag">&lt;groupId&gt;</span><span class="val">${group}</span><span class="tag">&lt;/groupId&gt;</span>\n`;
+  pom += `  <span class="tag">&lt;artifactId&gt;</span><span class="val">${artifact}</span><span class="tag">&lt;/artifactId&gt;</span>\n`;
+  pom += `  <span class="tag">&lt;version&gt;</span><span class="val">1.0.0</span><span class="tag">&lt;/version&gt;</span>\n\n`;
+  pom += `  <span class="comment">&lt;!-- Maven 私服配置 --&gt;</span>\n`;
+  pom += `  <span class="tag">&lt;repositories&gt;</span>\n`;
+  pom += `    <span class="tag">&lt;repository&gt;</span>\n`;
+  pom += `      <span class="tag">&lt;id&gt;</span>psbc-releases<span class="tag">&lt;/id&gt;</span>\n`;
+  pom += `      <span class="tag">&lt;url&gt;</span><span class="val">\${maven.release.url}</span><span class="tag">&lt;/url&gt;</span>\n`;
+  pom += `    <span class="tag">&lt;/repository&gt;</span>\n`;
+  pom += `  <span class="tag">&lt;/repositories&gt;</span>\n\n`;
+  pom += `  <span class="tag">&lt;dependencies&gt;</span>\n`;
+  deps.forEach(d => {
+    if (d.gav) {
+      const [g, a] = d.gav.split(':');
+      pom += `    <span class="tag">&lt;dependency&gt;</span>\n`;
+      pom += `      <span class="tag">&lt;groupId&gt;</span>${g}<span class="tag">&lt;/groupId&gt;</span>\n`;
+      pom += `      <span class="tag">&lt;artifactId&gt;</span>${a}<span class="tag">&lt;/artifactId&gt;</span>\n`;
+      pom += `      <span class="comment">&lt;!-- ${d.version} --&gt;</span>\n`;
+      pom += `    <span class="tag">&lt;/dependency&gt;</span>\n`;
+    } else {
+      pom += `    <span class="comment">&lt;!-- ${d.name} ${d.version} (基础设施) --&gt;</span>\n`;
+    }
+  });
+  pom += `  <span class="tag">&lt;/dependencies&gt;</span>\n`;
+  pom += `<span class="tag">&lt;/project&gt;</span>\n`;
+  document.getElementById('pomPreview').innerHTML = pom;
+}
+
+function renderSummary() {
+  const deps = getSelectedDeps();
+  const envs = [...selectedEnvs];
+  const samples = getSelectedSamples();
+  const artifact = document.getElementById('artifact').value || 'demo-service';
+  const group = document.getElementById('group').value || 'com.psbc';
+  const bootVer = document.getElementById('bootVersion').value || '3.5.12';
+  const javaVer = document.getElementById('javaVersion').value || '21';
+  const mvnUrl = document.getElementById('mvnReleaseUrl').value || '（未配置）';
+  const basePkg = document.getElementById('basePackage').value || 'com.psbc.demo';
+
+  let html = `<ul class="summary-list">
+    <li><span class="summary-label">项目</span><span class="summary-value">${group}:${artifact}</span></li>
+    <li><span class="summary-label">技术栈</span><span class="summary-value">Spring Boot ${bootVer} + JDK ${javaVer}</span></li>
+    <li><span class="summary-label">基础包名</span><span class="summary-value">${basePkg}</span></li>
+    <li><span class="summary-label">Maven私服</span><span class="summary-value">${mvnUrl}</span></li>
+    <li><span class="summary-label">部署环境</span><span class="summary-value">${envs.map(e => `<span class="summary-badge">${e.toUpperCase()}</span>`).join(' ')}</span></li>
+    <li><span class="summary-label">依赖组件</span><span class="summary-value">${deps.length} 个</span></li>
+    <li><span class="summary-label">示例代码</span><span class="summary-value">${samples.length} 个模块</span></li>
+  </ul>`;
+
+  if (samples.length > 0) {
+    const SAMPLE_NAMES = {
+      exception: '全局异常处理', auth: '权限控制', util: '常用工具类',
+      filter: 'Filter & 拦截器', structure: '代码分层结构', log: '日志规范',
+      test: '单元测试', api: '统一响应体 & API规范',
+      cache: '缓存服务封装', scheduled: '定时任务模板', file: '文件上传下载',
+      aop: 'AOP 切面编程', idempotent: '幂等性防重提交', lock: '分布式锁',
+      excel: 'Excel 导入导出', health: '健康检查与优雅停机',
+      flyway: '数据库迁移管理', cicd: 'CI/CD 流水线模板', docker: '容器化与 K8s 部署',
+      codescan: '代码扫描与规范', encrypt: '加密与数据脱敏', dbinit: '数据库初始化脚本',
+      feature: '特性开关与灰度发布', request: '全局请求增强'
+    };
+    html += `<div style="margin-top:12px;font-size:12px;color:var(--neutral-600);">示例模块：${samples.map(s => SAMPLE_NAMES[s]).join('、')}</div>`;
+  }
+
+  document.getElementById('summaryPreview').innerHTML = html;
+}
+
+// ========== Generate ==========
+function generateProject() {
+  const deps = getSelectedDeps();
+  const artifact = document.getElementById('artifact').value || 'demo-service';
+  const group = document.getElementById('group').value || 'com.psbc';
+  const name = document.getElementById('name').value || '邮储银行演示服务';
+  const bootVer = document.getElementById('bootVersion').value || '3.5.12';
+  const javaVer = document.getElementById('javaVersion').value || '21';
+  const envs = [...selectedEnvs];
+  const samples = getSelectedSamples();
+
+  if (!document.getElementById('artifact').value) {
+    alert('请填写 Artifact ID');
+    return;
+  }
+
+  const selectedNames = deps.map(d => d.name);
+  const bannedFound = selectedNames.filter(n => BANNED.includes(n));
+  const restrictedFound = selectedNames.filter(n => RESTRICTED.includes(n));
+  if (bannedFound.length > 0) {
+    alert(`以下组件已被行内淘汰，无法添加：\n${bannedFound.join('、')}`);
+    return;
+  }
+  if (restrictedFound.length > 0) {
+    if (!confirm(`以下组件为限制使用：\n${restrictedFound.join('、')}\n\n需提交特殊审批，是否继续？`)) return;
+  }
+
+  const zipName = `${artifact}.zip`;
+  alert(`「${name}」工程生成成功！
+
+技术栈：Spring Boot ${bootVer} + JDK ${javaVer}
+部署环境：${envs.map(e => e.toUpperCase()).join('、')}（${envs.length} 个）
+依赖组件：${deps.length} 个
+示例代码：${samples.length} 个模块
+Maven私服：已配置
+
+提示：本页面为方案演示，实际工程由 DevOps 平台构建并推送至 Git 仓库。`);
+}
+
+// ========== Init ==========
+renderComponents();
+renderEnvConfigPanel();
+updatePreview();
+</script>
+
+</body>
+</html>
