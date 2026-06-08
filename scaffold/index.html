@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>邮储银行 · 工程脚手架平台</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f5f5f5; color: #333;
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  }
+  .card-container {
+    display: flex; gap: 32px; flex-wrap: wrap; justify-content: center;
+    padding: 40px 20px;
+  }
+  .card {
+    width: 360px; background: #fff; border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    padding: 40px 32px; text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none; color: inherit; display: block;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+  .card-icon { font-size: 48px; margin-bottom: 16px; }
+  .card-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .card-desc { font-size: 14px; color: #666; line-height: 1.6; }
+  .card-badge {
+    display: inline-block; margin-top: 16px;
+    background: #e8f5e9; color: #2e7d32; font-size: 12px; font-weight: 600;
+    padding: 4px 12px; border-radius: 12px;
+  }
+  h1 { text-align: center; margin-bottom: 8px; font-size: 28px; color: #1b5e20; }
+  p.sub { text-align: center; color: #888; font-size: 14px; margin-bottom: 32px; }
+</style>
+</head>
+<body>
+<div>
+  <h1>邮储银行 · 工程脚手架平台</h1>
+  <p class="sub">V3.0 演示版</p>
+  <div class="card-container">
+    <a class="card" href="web.html">
+      <div class="card-icon">🌐</div>
+      <div class="card-title">Web 脚手架</div>
+      <div class="card-desc">面向 Web 端的工程脚手架配置平台，支持多环境、组件选择、示例代码生成</div>
+      <span class="card-badge">Web 版</span>
+    </a>
+    <a class="card" href="idea-plugin.html">
+      <div class="card-icon">🧩</div>
+      <div class="card-title">IDEA 插件脚手架</div>
+      <div class="card-desc">模拟 IntelliJ IDEA 插件交互体验，一站式配置 Spring Boot 工程</div>
+      <span class="card-badge">插件版</span>
+    </a>
+  </div>
+</div>
+</body>
+</html>
